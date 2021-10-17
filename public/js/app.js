@@ -109,6 +109,7 @@ export default class TagBrowserWidget {
     this.matchingItemsList.insertAdjacentHTML("afterbegin", bookTitlesMarkup);
 
     activeButtons(".bookTitle");
+    this.clearButton.disabled = false;
   }
 
   matchingItemsListClicked(event) {
@@ -131,6 +132,7 @@ export default class TagBrowserWidget {
     this.renderBook();
     this.tagList.replaceChildren("");
     this.renderTagList();
+    this.clearButton.disabled = true;
   }
 
   renderTagList() {
