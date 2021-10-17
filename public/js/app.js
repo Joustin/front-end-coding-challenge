@@ -33,7 +33,7 @@ const activeButtons = (classes) => {
 
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].onclick = function () {
-      let activeButton = document.querySelector(`${classes}.active`);
+      const activeButton = document.querySelector(`${classes}.active`);
       if (activeButton) {
         activeButton.classList.remove("active");
       }
@@ -52,7 +52,6 @@ export default class TagBrowserWidget {
 
     fetch("/js/data.json")
       .then((response) => response.json())
-      // use .bind because native promises change the "this" context
       .then(this.setData.bind(this))
       .then(this.getElements.bind(this))
       .then(this.bindEventListeners.bind(this))
@@ -94,10 +93,7 @@ export default class TagBrowserWidget {
   }
 
   tagListClicked(event) {
-    console.log("tag list (or child) clicked", event);
-
     const tagText = event.target.innerText;
-    // event.target.classList.toggle("active");
 
     const bookTitlesMarkup = this.data
       .filter((book) => {
@@ -116,7 +112,6 @@ export default class TagBrowserWidget {
   }
 
   matchingItemsListClicked(event) {
-    console.log("tag list (or child) clicked - LIST", event);
     const listItemId = event.target.dataset.uid;
 
     const selectedBook = this.data.filter((book) => {
@@ -126,12 +121,10 @@ export default class TagBrowserWidget {
     if (event.target.localName === "button") {
       this.state.book = makeBookObj(selectedBook);
       this.renderBook();
-      // console.log("this.state.book : ", this.state.book);
     }
   }
 
   clearButtonClicked(event) {
-    console.log("tag list (or child) clicked - CLEAR", event);
     this.selectedTagTitle.replaceChildren("No Tag Selected");
     this.matchingItemsList.replaceChildren("");
     this.state.book = defaultBookState;
